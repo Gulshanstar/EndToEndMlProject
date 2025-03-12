@@ -14,5 +14,5 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-if __name__ =='__main__':
-    logging.info('logging has started')
+
+imp_logger = logging.getLogger(__name__)

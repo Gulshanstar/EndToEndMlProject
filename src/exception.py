@@ -1,6 +1,6 @@
 import sys
 import logging
-from src.logger import logging
+from logger import imp_logger
 
 def get_exception_details(error_message, error_details: sys):
     _, _, exc_tb = error_details.exc_info()
@@ -20,10 +20,7 @@ class CustomException(Exception):
     def __str__(self):
         return self.error_message
 
-if __name__ == '__main__':
-    try:
-        a = 1 / 0  # Intentional division by zero
-    except Exception as e:
-        logging.info('Exception divided by zero') # Logs traceback
-        raise CustomException(e, sys)
+
+
+
 
