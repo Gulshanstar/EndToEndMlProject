@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Performance Indicator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Subtle float animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Glow pulse animation */
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 10px rgba(123, 97, 255, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(123, 97, 255, 0.4); }
+            100% { box-shadow: 0 0 10px rgba(123, 97, 255, 0.2); }
+        }
+
+        /* Custom styles */
+        body {
+            background: linear-gradient(135deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .form-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            padding: 3rem;
+            width: 32rem;
+            max-width: 90%;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.8s ease-out, glowPulse 4s infinite ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+        
+        .form-title {
+            color: #333;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(to right, #5e48e8, #d56fe8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+        
+        .form-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, #5e48e8, #d56fe8);
+            border-radius: 3px;
+        }
+        
+        .form-label {
+            color: #4B5563;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        
+        .form-select, .form-input {
+            width: 100%;
+            padding: 0.85rem 1.2rem;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            color: #333;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-select:focus, .form-input:focus {
+            outline: none;
+            border-color: #7B61FF;
+            box-shadow: 0 0 0 3px rgba(123, 97, 255, 0.2);
+            background: white;
+        }
+        
+        .form-select:hover, .form-input:hover {
+            border-color: #7B61FF;
+        }
+        
+        .form-input[type="number"]::-webkit-inner-spin-button,
+        .form-input[type="number"]::-webkit-outer-spin-button {
+            opacity: 0.5;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 1.05rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(107, 114, 241, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(107, 114, 241, 0.4);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.4s;
+        }
+        
+        .submit-btn:hover::after {
+            left: 100%;
+        }
+        
+        .result-text {
+            margin-top: 2rem;
+            color: #1F2937;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(236, 252, 255, 0.9) 0%, rgba(233, 236, 255, 0.9) 100%);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        /* Form spacing */
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .form-card {
+                padding: 2rem;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-card">
+        <h1 class="form-title">Student Exam Performance Indicator</h1>
+        <form action="{{ url_for('predict_datapoint') }}" method="post">
+            <div class="form-group">
+                <label class="form-label">Gender</label>
+                <select class="form-select" name="gender" required>
+                    <option disabled selected value="">Select your Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Race or Ethnicity</label>
+                <select class="form-select" name="ethnicity" required>
+                    <option disabled selected value="">Select Ethnicity</option>
+                    <option value="group A">Group A</option>
+                    <option value="group B">Group B</option>
+                    <option value="group C">Group C</option>
+                    <option value="group D">Group D</option>
+                    <option value="group E">Group E</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Parental Level of Education</label>
+                <select class="form-select" name="parental_level_of_education" required>
+                    <option disabled selected value="">Select Parent Education</option>
+                    <option value="associate's degree">Associate's degree</option>
+                    <option value="bachelor's degree">Bachelor's degree</option>
+                    <option value="high school">High school</option>
+                    <option value="master's degree">Master's degree</option>
+                    <option value="some college">Some college</option>
+                    <option value="some high school">Some high school</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Lunch Type</label>
+                <select class="form-select" name="lunch" required>
+                    <option disabled selected value="">Select Lunch Type</option>
+                    <option value="free/reduced">Free/Reduced</option>
+                    <option value="standard">Standard</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Test Preparation Course</label>
+                <select class="form-select" name="test_preparation_course" required>
+                    <option disabled selected value="">Select Test Course</option>
+                    <option value="none">None</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Writing Score (0-100)</label>
+                <input type="number" name="writing_score" class="form-input" placeholder="Enter your Writing Score" min="0" max="100" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Reading Score (0-100)</label>
+                <input type="number" name="reading_score" class="form-input" placeholder="Enter your Reading Score" min="0" max="100" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Predict your Maths Score" class="submit-btn">
+            </div>
+        </form>
+        <h2 class="result-text">{{results}}</h2>
+    </div>
+</body>
+</html>
